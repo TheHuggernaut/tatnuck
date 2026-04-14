@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tatnuck Booksellers — Worcester's Third Place</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Epilogue',sans-serif;background:#f5f0e8;color:#1a1510;font-size:16px;line-height:1.7}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+:root{
+  --parchment:#f5f0e8;
+  --parchment-deep:#ede5d4;
+  --ink:#1a1510;
+  --ink-soft:#3d352a;
+  --muted:#7a6e62;
+  --amber:#b8601a;
+  --amber-pale:#faebd4;
+  --forest:#1f3d28;
+  --forest-pale:#e2ede5;
+  --plum:#3a1f4a;
+  --plum-pale:#ede5f5;
+  --border:rgba(26,21,16,0.1);
+  --card:#fff9f2;
+  --serif:'Libre Baskerville',Georgia,serif;
+  --sans:'Epilogue',sans-serif;
+}
+
+nav{
+  background:var(--forest);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5vw;height:62px;
+  position:sticky;top:0;z-index:100;
+}
+.logo{
+  font-family:var(--serif);
+  font-size:1.2rem;font-weight:700;
+  color:#fff;letter-spacing:-0.01em;
+  display:flex;align-items:center;gap:10px;
+}
+.logo-mark{
+  width:30px;height:30px;
+  background:var(--amber);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;font-weight:700;color:#fff;
+  font-family:var(--serif);
+}
+.nav-links{display:flex;gap:1.8rem;align-items:center}
+.nav-links a{
+  font-size:0.82rem;font-weight:400;
+  color:rgba(255,255,255,0.65);
+  letter-spacing:0.03em;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:#fff}
+.nav-links .cta{
+  background:var(--amber);color:#fff !important;
+  padding:0.45rem 1.1rem;border-radius:6px;
+  font-weight:500 !important;font-size:0.82rem !important;
+}
+
+.hero{
+  background:var(--forest);
+  color:#fff;
+  padding:5rem 5vw 0;
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:4rem;
+  align-items:end;
+  overflow:hidden;
+}
+.hero-eyebrow{
+  font-size:0.72rem;font-weight:500;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:1.2rem;
+  display:flex;align-items:center;gap:0.7rem;
+}
+.hero-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--amber)}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(2.6rem,5vw,4.2rem);
+  font-weight:700;line-height:1.08;
+  letter-spacing:-0.025em;
+  margin-bottom:1.4rem;
+}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero-sub{
+  font-size:1rem;color:rgba(255,255,255,0.6);
+  font-weight:300;line-height:1.85;
+  max-width:460px;margin-bottom:2rem;
+}
+.hero-actions{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:3rem}
+.btn-amber{
+  background:var(--amber);color:#fff;
+  padding:0.8rem 1.8rem;border-radius:6px;
+  font-weight:500;font-size:0.88rem;
+  border:none;cursor:pointer;font-family:var(--sans);
+  transition:opacity 0.2s,transform 0.15s;
+}
+.btn-amber:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-outline-white{
+  background:transparent;color:rgba(255,255,255,0.8);
+  padding:0.8rem 1.8rem;border-radius:6px;
+  font-weight:400;font-size:0.88rem;
+  border:1px solid rgba(255,255,255,0.2);
+  cursor:pointer;font-family:var(--sans);
+  transition:background 0.2s;
+}
+.btn-outline-white:hover{background:rgba(255,255,255,0.08)}
+.hero-shelf{
+  align-self:end;
+  display:flex;gap:8px;align-items:flex-end;
+  padding-bottom:0;
+}
+.book-spine{
+  border-radius:3px 0 0 3px;
+  display:flex;align-items:flex-end;justify-content:center;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-size:0.62rem;font-weight:500;letter-spacing:0.06em;
+  color:rgba(255,255,255,0.5);
+  padding:8px 6px;
+  cursor:default;
+  transition:transform 0.2s;
+  flex-shrink:0;
+}
+.book-spine:hover{transform:translateY(-8px)}
+
+.ticker-bar{
+  background:var(--amber);
+  padding:0.6rem 5vw;
+  display:flex;gap:3rem;overflow:hidden;
+  white-space:nowrap;
+}
+.ticker-bar span{
+  font-size:0.75rem;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:#fff;flex-shrink:0;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.5)}
+
+.events-strip{
+  background:var(--parchment);
+  padding:3.5rem 5vw;
+}
+.strip-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:2rem;
+}
+.section-label{
+  font-size:0.68rem;font-weight:600;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:0.5rem;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(1.5rem,2.8vw,2rem);
+  font-weight:700;color:var(--ink);
+  letter-spacing:-0.02em;line-height:1.15;
+}
+.see-all{
+  font-size:0.8rem;color:var(--amber);
+  font-weight:500;border-bottom:1px solid var(--amber);
+  padding-bottom:1px;
+}
+.events-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.event-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  transition:transform 0.2s,box-shadow 0.2s;
+  cursor:pointer;
+}
+.event-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,21,16,0.09)}
+.event-color-bar{height:4px}
+.ec-mtg{background:#8b1a1a}
+.ec-dnd{background:var(--plum)}
+.ec-open{background:var(--forest)}
+.ec-book{background:var(--amber)}
+.event-body{padding:1rem}
+.event-day-badge{
+  display:inline-block;
+  font-size:0.65rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.2rem 0.55rem;
+  border-radius:4px;margin-bottom:0.7rem;
+}
+.badge-mtg{background:#fde8e8;color:#7a1515}
+.badge-dnd{background:var(--plum-pale);color:#2d1540}
+.badge-open{background:var(--forest-pale);color:#163020}
+.badge-book{background:var(--amber-pale);color:#7a3a0a}
+.event-name{
+  font-family:var(--serif);
+  font-size:0.95rem;font-weight:700;
+  color:var(--ink);margin-bottom:0.3rem;line-height:1.3;
+}
+.event-meta{font-size:0.78rem;color:var(--muted)}
+.event-desc{font-size:0.8rem;color:var(--ink-soft);margin-top:0.5rem;line-height:1.6}
+
+.main-content{
+  display:grid;
+  grid-template-columns:1fr 320px;
+  gap:2.5rem;
+  padding:3.5rem 5vw;
+  background:var(--parchment);
+}
+
+.community-section{}
+.games-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1rem;margin-top:1.5rem;
+}
+.game-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:1.2rem;
+  transition:transform 0.15s;cursor:pointer;
+}
+.game-card:hover{transform:translateY(-2px)}
+.game-type-dot{
+  width:8px;height:8px;border-radius:50%;
+  display:inline-block;margin-right:6px;
+  vertical-align:middle;
+}
+.game-card-title{
+  font-family:var(--serif);font-size:0.9rem;font-weight:700;
+  color:var(--ink);margin:0.6rem 0 0.3rem;line-height:1.3;
+}
+.game-players{font-size:0.75rem;color:var(--muted)}
+.game-tag{
+  display:inline-block;margin-top:0.5rem;
+  font-size:0.65rem;font-weight:600;letter-spacing:0.08em;
+  text-transform:uppercase;padding:0.2rem 0.5rem;
+  border-radius:4px;
+}
+
+.lfg-section{margin-top:2.5rem}
+.lfg-post{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:1.1rem 1.3rem;
+  display:flex;gap:1rem;align-items:flex-start;
+  margin-bottom:0.75rem;
+  transition:border-color 0.2s;
+}
+.lfg-post:hover{border-color:rgba(26,21,16,0.2)}
+.lfg-avatar{
+  width:36px;height:36px;border-radius:50%;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;font-weight:600;color:#fff;
+}
+.lfg-body{flex:1}
+.lfg-handle{font-size:0.8rem;font-weight:600;color:var(--ink)}
+.lfg-text{font-size:0.82rem;color:var(--ink-soft);margin-top:0.2rem;line-height:1.55}
+.lfg-footer{display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap}
+.lfg-chip{
+  font-size:0.65rem;font-weight:600;letter-spacing:0.06em;
+  text-transform:uppercase;padding:0.18rem 0.5rem;
+  border-radius:4px;
+}
+
+.sidebar{}
+.sidebar-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:1.3rem;
+  margin-bottom:1.5rem;
+}
+.sidebar-title{
+  font-family:var(--serif);font-size:0.95rem;font-weight:700;
+  color:var(--ink);margin-bottom:1rem;
+}
+.hours-row{
+  display:flex;justify-content:space-between;
+  font-size:0.8rem;padding:0.4rem 0;
+  border-bottom:1px solid var(--border);
+}
+.hours-row:last-child{border-bottom:none}
+.hours-day{color:var(--ink-soft);font-weight:400}
+.hours-time{color:var(--ink);font-weight:500}
+.today-row .hours-day,.today-row .hours-time{color:var(--amber);font-weight:600}
+
+.staff-pick{
+  display:flex;gap:0.9rem;align-items:flex-start;
+  margin-bottom:1rem;padding-bottom:1rem;
+  border-bottom:1px solid var(--border);
+}
+.staff-pick:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.book-thumb{
+  width:44px;height:62px;border-radius:3px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:0.55rem;font-weight:700;
+  text-align:center;line-height:1.3;padding:4px;color:#fff;
+}
+.pick-info{}
+.pick-title{font-size:0.82rem;font-weight:600;color:var(--ink);line-height:1.3}
+.pick-author{font-size:0.72rem;color:var(--muted);margin-top:1px}
+.pick-note{font-size:0.75rem;color:var(--ink-soft);margin-top:0.3rem;line-height:1.5;font-style:italic}
+
+.newsletter{
+  background:var(--forest);
+  padding:3.5rem 5vw;
+  display:grid;grid-template-columns:1fr 380px;
+  gap:4rem;align-items:center;
+}
+.newsletter .section-label{color:var(--amber)}
+.newsletter .section-title{color:#fff}
+.nl-sub{font-size:0.9rem;color:rgba(255,255,255,0.55);margin-top:0.5rem;font-weight:300;line-height:1.8}
+.nl-form{display:flex;gap:0.5rem}
+.nl-input{
+  flex:1;padding:0.75rem 1rem;
+  border-radius:6px;border:1px solid rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.08);
+  color:#fff;font-family:var(--sans);font-size:0.88rem;
+}
+.nl-input::placeholder{color:rgba(255,255,255,0.35)}
+.nl-input:focus{outline:none;border-color:var(--amber)}
+.nl-perks{margin-top:1.2rem;display:flex;flex-direction:column;gap:0.5rem}
+.nl-perk{display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:rgba(255,255,255,0.55)}
+.nl-perk-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);flex-shrink:0}
+
+footer{
+  background:var(--ink);
+  padding:3rem 5vw 2rem;
+}
+.footer-top{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:3rem;padding-bottom:2.5rem;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.footer-logo{
+  font-family:var(--serif);font-size:1.1rem;font-weight:700;
+  color:#fff;margin-bottom:0.6rem;
+}
+.footer-logo em{color:var(--amber);font-style:normal}
+.footer-tagline{font-size:0.8rem;color:rgba(255,255,255,0.4);line-height:1.7;max-width:220px}
+.footer-col-title{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;color:rgba(255,255,255,0.4);
+  margin-bottom:0.9rem;
+}
+.footer-link{display:block;font-size:0.82rem;color:rgba(255,255,255,0.5);margin-bottom:0.5rem;transition:color 0.2s}
+.footer-link:hover{color:#fff}
+.footer-bottom{
+  display:flex;justify-content:space-between;
+  padding-top:1.5rem;font-size:0.75rem;
+  color:rgba(255,255,255,0.25);flex-wrap:wrap;gap:0.5rem;
+}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding-bottom:3rem}
+  .hero-shelf{display:none}
+  .events-row{grid-template-columns:repeat(2,1fr)}
+  .main-content{grid-template-columns:1fr}
+  .games-grid{grid-template-columns:repeat(2,1fr)}
+  .newsletter{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .events-row{grid-template-columns:1fr}
+  .games-grid{grid-template-columns:1fr}
+  nav .nav-links a:not(.cta){display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-mark">T</div>
+    Tatnuck Booksellers
+  </div>
+  <div class="nav-links">
+    <a href="#events">Events</a>
+    <a href="#community">Community</a>
+    <a href="#games">Game Library</a>
+    <a href="#lfg">Find a Group</a>
+    <a href="#contact" class="cta">Visit Us</a>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div>
+    <div class="hero-eyebrow">Worcester's bookstore since 1984</div>
+    <h1>Books. Games.<br><em>Your people.</em></h1>
+    <p class="hero-sub">Tatnuck has always been the place you linger. Now we've made it official — weekly game nights, open tables, and a community board that connects Worcester's readers and players.</p>
+    <div class="hero-actions">
+      <button class="btn-amber" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">This week's events</button>
+      <button class="btn-outline-white" onclick="document.getElementById('lfg').scrollIntoView({behavior:'smooth'})">Find a game group</button>
+    </div>
+  </div>
+  <div class="hero-shelf" aria-hidden="true">
+    <div class="book-spine" style="height:220px;width:28px;background:#3a2a1a">The Name of the Wind</div>
+    <div class="book-spine" style="height:180px;width:22px;background:#1f3d28">Elden Ring<br>Lore</div>
+    <div class="book-spine" style="height:240px;width:32px;background:#3a1f4a">Words of Radiance</div>
+    <div class="book-spine" style="height:160px;width:20px;background:#5a2a10">Neuromancer</div>
+    <div class="book-spine" style="height:260px;width:30px;background:#1a2a3a">The Priory of<br>the Orange Tree</div>
+    <div class="book-spine" style="height:195px;width:24px;background:#4a1a1a">Player of<br>Games</div>
+    <div class="book-spine" style="height:210px;width:26px;background:#2a1f3a">Piranesi</div>
+    <div class="book-spine" style="height:175px;width:22px;background:#3a3010">American<br>Gods</div>
+    <div class="book-spine" style="height:230px;width:28px;background:#1e3a28">The Blade<br>Itself</div>
+    <div class="book-spine" style="height:190px;width:24px;background:#2a1a2a">Mistborn</div>
+  </div>
+</section>
+
+<div class="ticker-bar">
+  <span><span class="ticker-dot"></span>Friday Night Magic — every Friday 6pm</span>
+  <span><span class="ticker-dot"></span>D&D open tables — Thursdays 5pm</span>
+  <span><span class="ticker-dot"></span>Game library: 60+ titles, free with purchase</span>
+  <span><span class="ticker-dot"></span>New arrivals: Dune Imperium Uprising · Lorcana · Earthborne Rangers</span>
+  <span><span class="ticker-dot"></span>Saturday author reading — April 19 @ 2pm</span>
+</div>
+
+<section class="events-strip" id="events">
+  <div class="strip-header">
+    <div>
+      <div class="section-label">This week</div>
+      <h2 class="section-title">What's on at Tatnuck</h2>
+    </div>
+    <a href="#" class="see-all">Full calendar →</a>
+  </div>
+  <div class="events-row">
+    <div class="event-card">
+      <div class="event-color-bar ec-open"></div>
+      <div class="event-body">
+        <div class="event-day-badge badge-open">Wed · Apr 16</div>
+        <div class="event-name">Open Game Library Night</div>
+        <div class="event-meta">6pm – 9pm · Free with purchase</div>
+        <div class="event-desc">Drop in, grab a game from our library, find a table. No signup needed. All experience levels.</div>
+      </div>
+    </div>
+    <div class="event-card">
+      <div class="event-color-bar ec-dnd"></div>
+      <div class="event-body">
+        <div class="event-day-badge badge-dnd">Thu · Apr 17</div>
+        <div class="event-name">D&D Open Tables</div>
+        <div class="event-meta">5pm – 9pm · Free</div>
+        <div class="event-desc">Two ongoing campaigns + a drop-in one-shot table for newcomers. DMs available. Dice provided.</div>
+      </div>
+    </div>
+    <div class="event-card">
+      <div class="event-color-bar ec-mtg"></div>
+      <div class="event-body">
+        <div class="event-day-badge badge-mtg">Fri · Apr 18</div>
+        <div class="event-name">Friday Night Magic</div>
+        <div class="event-meta">6:30pm – 10pm · $10 entry</div>
+        <div class="event-desc">Standard + Commander pods. Prize packs for top finishes. Beginner bracket available.</div>
+      </div>
+    </div>
+    <div class="event-card">
+      <div class="event-color-bar ec-book"></div>
+      <div class="event-body">
+        <div class="event-day-badge badge-book">Sat · Apr 19</div>
+        <div class="event-name">Author Reading: T.L. Huchu</div>
+        <div class="event-meta">2pm – 4pm · Free, RSVP encouraged</div>
+        <div class="event-desc">Reading from <em>The Hairdresser of Harare</em>, followed by Q&A and signing. Refreshments provided.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="main-content">
+  <div>
+    <section class="community-section" id="games">
+      <div class="section-label">Game library</div>
+      <h2 class="section-title">Borrow before you buy</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-top:0.4rem">60+ titles available in-store. Free to play with any purchase, or $5 table fee.</p>
+      <div class="games-grid">
+
+        <div class="game-card">
+          <div style="display:flex;align-items:center">
+            <span class="game-type-dot" style="background:#1f3d28"></span>
+            <span style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--forest)">Strategy</span>
+          </div>
+          <div class="game-card-title">Dune: Imperium</div>
+          <div class="game-players">2–4 players · 60–120 min</div>
+          <span class="game-tag" style="background:var(--forest-pale);color:#163020">Staff pick</span>
+        </div>
+
+        <div class="game-card">
+          <div style="display:flex;align-items:center">
+            <span class="game-type-dot" style="background:var(--plum)"></span>
+            <span style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--plum)">Deck Builder</span>
+          </div>
+          <div class="game-card-title">Dominion (2nd Ed.)</div>
+          <div class="game-players">2–4 players · 30 min</div>
+          <span class="game-tag" style="background:var(--plum-pale);color:#2d1540">Beginner friendly</span>
+        </div>
+
+        <div class="game-card">
+          <div style="display:flex;align-items:center">
+            <span class="game-type-dot" style="background:#8b1a1a"></span>
+            <span style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8b1a1a">Cooperative</span>
+          </div>
+          <div class="game-card-title">Pandemic Legacy S1</div>
+          <div class="game-players">2–4 players · 60 min</div>
+          <span class="game-tag" style="background:#fde8e8;color:#7a1515">Campaign</span>
+        </div>
+
+        <div class="game-card">
+          <div style="display:flex;align-items:center">
+            <span class="game-type-dot" style="background:var(--amber)"></span>
+            <span style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber)">Worker Placement</span>
+          </div>
+          <div class="game-card-title">Viticulture EE</div>
+          <div class="game-players">1–6 players · 45–90 min</div>
+          <span class="game-tag" style="background:var(--amber-pale);color:#7a3a0a">Popular</span>
+        </div>
+
+        <div class="game-card">
+          <div style="display:flex;align-items:center">
+            <span class="game-type-dot" style="background:#1f3d28"></span>
+            <span style="font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--forest)">Area Control</span>
+          </div>
+          <div class="game-card-title">Root</div>
+          <div class="game-players">2–4 players · 60–90 min</div>
+          <span class="game-tag" style="background:var(--forest-pale);color:#163020">Asymmetric</span>
+        </div>
+
+        <div class="game-card" style="border-style:dashed;display:flex;align-items:center;justify-content:center;min-height:120px">
+          <div style="text-align:center">
+            <div style="font-size:1.2rem;margin-bottom:0.4rem;color:var(--muted)">+54</div>
+            <div style="font-size:0.75rem;color:var(--muted)">more in library</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="lfg-section" id="lfg">
+      <div class="section-label">Community board</div>
+      <h2 class="section-title">Looking for group</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-top:0.4rem;margin-bottom:1.2rem">Posted by regulars. Drop a card at the front desk to add yours.</p>
+
+      <div class="lfg-post">
+        <div class="lfg-avatar" style="background:#1f3d28">MK</div>
+        <div class="lfg-body">
+          <div class="lfg-handle">mireille_k</div>
+          <div class="lfg-text">Looking for 2 more players for a Curse of Strahd campaign. Starting fresh, Thursdays 6–9pm. New players very welcome — I DM, you just show up.</div>
+          <div class="lfg-footer">
+            <span class="lfg-chip" style="background:var(--plum-pale);color:#2d1540">D&D 5e</span>
+            <span class="lfg-chip" style="background:var(--forest-pale);color:#163020">Thursdays</span>
+            <span class="lfg-chip" style="background:var(--amber-pale);color:#7a3a0a">2 spots open</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lfg-post">
+        <div class="lfg-avatar" style="background:#3a1f4a">RO</div>
+        <div class="lfg-body">
+          <div class="lfg-handle">ronan_o</div>
+          <div class="lfg-text">Commander pod needs a 4th. We play casual-power, no infinite combos. Wednesdays after 7. Have extra decks if you want to try before committing.</div>
+          <div class="lfg-footer">
+            <span class="lfg-chip" style="background:#fde8e8;color:#7a1515">MTG Commander</span>
+            <span class="lfg-chip" style="background:var(--forest-pale);color:#163020">Wednesdays</span>
+            <span class="lfg-chip" style="background:var(--amber-pale);color:#7a3a0a">1 spot open</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lfg-post">
+        <div class="lfg-avatar" style="background:#8b3a10">SL</div>
+        <div class="lfg-body">
+          <div class="lfg-handle">sara_l</div>
+          <div class="lfg-text">Anyone want to do a Pandemic Legacy campaign? Looking for a consistent group of 3 who can commit to biweekly Saturdays. Big euro gamer, happy to teach.</div>
+          <div class="lfg-footer">
+            <span class="lfg-chip" style="background:#fde8e8;color:#7a1515">Pandemic Legacy</span>
+            <span class="lfg-chip" style="background:var(--forest-pale);color:#163020">Saturdays</span>
+            <span class="lfg-chip" style="background:var(--plum-pale);color:#2d1540">2 spots open</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-amber" style="margin-top:1rem;font-size:0.82rem;padding:0.65rem 1.4rem">Post your own listing</button>
+    </section>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Hours &amp; location</div>
+      <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">10am – 7pm</span></div>
+      <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">10am – 7pm</span></div>
+      <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">10am – 9pm</span></div>
+      <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">10am – 9pm</span></div>
+      <div class="hours-row today-row"><span class="hours-day">Friday ← today</span><span class="hours-time">10am – 9pm</span></div>
+      <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">10am – 8pm</span></div>
+      <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">12pm – 6pm</span></div>
+      <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--ink);margin-bottom:0.2rem">335 Chandler St</div>
+        <div style="font-size:0.78rem;color:var(--muted)">Worcester, MA 01602</div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-title">Staff picks this week</div>
+
+      <div class="staff-pick">
+        <div class="book-thumb" style="background:#1f3d28">THE WAY OF KINGS</div>
+        <div class="pick-info">
+          <div class="pick-title">The Way of Kings</div>
+          <div class="pick-author">Brandon Sanderson</div>
+          <div class="pick-note">"If you play D&D, this is your novel. Magic systems that actually have rules." — Jen, bookseller</div>
+        </div>
+      </div>
+
+      <div class="staff-pick">
+        <div class="book-thumb" style="background:var(--plum)">PIRANESI</div>
+        <div class="pick-info">
+          <div class="pick-title">Piranesi</div>
+          <div class="pick-author">Susanna Clarke</div>
+          <div class="pick-note">"Reads like a puzzle game you can't put down. Finished it in one sitting." — Dev, bookseller</div>
+        </div>
+      </div>
+
+      <div class="staff-pick">
+        <div class="book-thumb" style="background:#5a2a10">LEGEND OF ZELDA HYRULE HISTORIA</div>
+        <div class="pick-info">
+          <div class="pick-title">Hyrule Historia</div>
+          <div class="pick-author">Nintendo</div>
+          <div class="pick-note">"Art, lore, timeline. The definitive object for any Zelda player." — Marcus, bookseller</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card" style="background:var(--forest);border-color:transparent">
+      <div style="font-size:0.68rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:0.5rem">Game night newcomers</div>
+      <div style="font-family:var(--serif);font-size:1rem;font-weight:700;color:#fff;margin-bottom:0.6rem;line-height:1.3">Never played before? Show up anyway.</div>
+      <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:1rem">Wednesday nights are relaxed, no-experience-needed. Our regulars will teach you something. Bring a friend or come solo.</p>
+      <button class="btn-amber" style="width:100%;font-size:0.82rem;padding:0.65rem">What to expect →</button>
+    </div>
+  </aside>
+</div>
+
+<section class="newsletter" id="contact">
+  <div>
+    <div class="section-label">Stay in the loop</div>
+    <h2 class="section-title">The Tatnuck Dispatch</h2>
+    <p class="nl-sub">Weekly email: upcoming events, new game arrivals, staff picks, and community board highlights. No spam, unsubscribe anytime.</p>
+  </div>
+  <div>
+    <div class="nl-form">
+      <input class="nl-input" type="email" placeholder="your@email.com">
+      <button class="btn-amber">Subscribe</button>
+    </div>
+    <div class="nl-perks">
+      <div class="nl-perk"><span class="nl-perk-dot"></span>Event announcements before they fill up</div>
+      <div class="nl-perk"><span class="nl-perk-dot"></span>New game library additions</div>
+      <div class="nl-perk"><span class="nl-perk-dot"></span>Community board digest</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Tatnuck <em>Booksellers</em></div>
+      <div class="footer-tagline">Worcester's bookstore and community gathering place since 1984. Come for the books. Stay for the people.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Visit</div>
+      <a class="footer-link" href="#">335 Chandler St, Worcester</a>
+      <a class="footer-link" href="#">(508) 756-7644</a>
+      <a class="footer-link" href="#">tatnuck@tatnuck.com</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Community</div>
+      <a class="footer-link" href="#">Events calendar</a>
+      <a class="footer-link" href="#">Game library</a>
+      <a class="footer-link" href="#">Find a group</a>
+      <a class="footer-link" href="#">Post a listing</a>
+    </div>
+    <div>
+      <div class="footer-col-title">Store</div>
+      <a class="footer-link" href="#">New arrivals</a>
+      <a class="footer-link" href="#">Staff picks</a>
+      <a class="footer-link" href="#">Gift cards</a>
+      <a class="footer-link" href="#">Used books</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Tatnuck Booksellers · Worcester, MA</span>
+    <span>Independent since 1984</span>
+  </div>
+</footer>
+
+<script>
+const today = new Date().getDay();
+document.querySelectorAll('.hours-row').forEach((row,i)=>{
+  row.classList.remove('today-row');
+  const days = [6,0,1,2,3,4,5];
+  if(days[i]===today){
+    const day = row.querySelector('.hours-day');
+    const orig = day.textContent.split(' ←')[0];
+    day.textContent = orig + ' ← today';
+    row.classList.add('today-row');
+  }
+});
+</script>
+</body>
+</html>
